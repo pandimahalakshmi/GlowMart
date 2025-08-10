@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GlowMart — Beauty & Skincare</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: #f8f9fa;
+    }
+    /* Sidebar full background and full height */
+    .sidebar {
+      height: 100vh;               /* Full viewport height */
+      position: sticky;
+      top: 0;
+      background-color: #6f42c1;  /* Rich purple for full sidebar */
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      border-right: none;
+    }
+    /* Category buttons inside sidebar */
+    .category-btn {
+      margin-bottom: 15px;
+      padding: 12px 0;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s ease;
+      color: #6f42c1;            /* Text color matches sidebar bg */
+      background-color: #d6bcfa; /* Light lavender background */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      text-align: center;
+      user-select: none;
+    }
+    .category-btn:hover {
+      background-color: #c3a3f7;
+      color: #4b2c91;
+    }
+    /* Active button style */
+    .category-btn.active {
+      background-color: #4b2c91;
+      color: #f8f9fa;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    /* Adjust container spacing so main content is spaced nicely */
+    main {
+      padding-top: 2rem;
+      padding-left: 2rem;
+    }
+    /* Cards shadow for better look */
+    .card {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border: none;
+      border-radius: 0.75rem;
+      transition: transform 0.15s ease-in-out;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">GlowMart</a>
+      <div>
+        <a href="checkout.html" class="btn btn-primary me-2">Checkout</a>
+        <a href="view_orders.php" class="btn btn-outline-secondary">View Orders</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-12 col-md-3 col-lg-2 sidebar">
+        <button class="category-btn active" data-cat="all">All Products</button>
+        <button class="category-btn" data-cat="Face">Face</button>
+        <button class="category-btn" data-cat="Hair">Hair</button>
+        <button class="category-btn" data-cat="Body">Body</button>
+        <button class="category-btn" data-cat="Perfume">Perfume</button>
+      </div>
+
+      <!-- Products -->
+      <main class="col-12 col-md-9 col-lg-10">
+        <h1 class="mb-4 text-center">GlowMart — Featured Products</h1>
+        <div class="row" id="product-list"></div>
+      </main>
+    </div>
+  </div>
+
+  <footer class="text-center py-4 mt-4 bg-white shadow-sm">
+    <small>© GlowMart — Beauty & Skincare</small>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Products with categories added
+    const productNames = [
+      "Hydrating Face Serum", "Vitamin C Cleanser", "Glow Face Moisturizer",
+      "Overnight Repair Mask", "Aloe Vera Gel", "Charcoal Face Wash",
+      "Rose Water Toner", "Green Tea Night Cream", "SPF 50 Sunscreen",
+      "Lip Hydration Balm"
+    ];
+
+    const categories = ["Face", "Hair", "Body", "Perfume"];
+
+    const PRODUCTS = Array.from({ length: 50 }, (_, i) => ({
+      id: i + 1,
+      name: productNames[i % productNames.length],
+      price: (Math.random() * 20 + 5).toFixed(2),
+      img: `image/product${i + 1}.jpg`,
+      category: categories[i % categories.length]
+    }));
+
+    window.PRODUCTS = PRODUCTS; // for script.js to access
+
+    const productList = document.getElementById("product-list");
+    const categoryButtons = document.querySelectorAll(".category-btn");
+
+    function renderProducts(filterCat = "all") {
+      productList.innerHTML = "";
+      const filtered = filterCat === "all" 
+        ? PRODUCTS 
+        : PRODUCTS.filter(p => p.category === filterCat);
+
+      if(filtered.length === 0) {
+        productList.innerHTML = `<p class="text-center">No products found in this category.</p>`;
+        return;
+      }
+
+      filtered.forEach(p => {
+        const col = document.createElement("div");
+        col.className = "col-sm-6 col-md-4 col-lg-3 mb-4";
+        col.innerHTML = `
+          <div class="card h-100 shadow-sm">
+            <img src="${p.img}" class="card-img-top" alt="${p.name}" style="object-fit:cover; height:200px;">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">${p.name}</h5>
+              <p class="card-text mb-2">Price: $${p.price}</p>
+              <div class="mt-auto">
+                <div class="d-flex gap-2">
+                  <input type="number" min="1" value="1" id="qty-${p.id}" class="form-control form-control-sm" style="width:80px" />
+                  <button class="btn btn-success btn-sm w-100" onclick="addToCart(${p.id})">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        productList.appendChild(col);
+      });
+    }
+
+    // Handle category button clicks
+    categoryButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        // Remove active from all buttons
+        categoryButtons.forEach(b => b.classList.remove("active"));
+        // Set active to clicked
+        btn.classList.add("active");
+        // Render products filtered by clicked category
+        renderProducts(btn.getAttribute("data-cat"));
+      });
+    });
+
+    // Initial render all products
+    renderProducts();
+  </script>
+</body>
+</html>
