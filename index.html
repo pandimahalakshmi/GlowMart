@@ -84,6 +84,11 @@
         <button class="category-btn" data-cat="Hair">Hair</button>
         <button class="category-btn" data-cat="Body">Body</button>
         <button class="category-btn" data-cat="Perfume">Perfume</button>
+
+        <!-- About Us Button at bottom -->
+        <button class="category-btn mt-auto" style="background-color:#d6bcfa; color:#6f42c1;" data-bs-toggle="modal" data-bs-target="#aboutUsModal">
+          About Us
+        </button>
       </div>
 
       <!-- Products -->
@@ -98,7 +103,50 @@
     <small>© GlowMart — Beauty & Skincare</small>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- About Us Modal -->
+  <div class="modal fade" id="aboutUsModal" tabindex="-1" aria-labelledby="aboutUsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="aboutUsModalLabel">About GlowMart</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <p>
+            GlowMart is a digital consumer-centric retail platform offering a wide range of classic and emerging branded beauty and wellness products for skin care, body care, hair care, and fragrance for both men and women. We also feature lifestyle brands, including makeup.
+          </p>
+
+          <div class="d-flex flex-wrap gap-2 my-4 justify-content-center">
+            <button type="button" class="btn btn-outline-primary px-3 py-2">
+              FREE SHIPPING <br><small>For Orders Above INR 500</small>
+            </button>
+            <button type="button" class="btn btn-outline-primary px-3 py-2">
+              GENUINE PRODUCTS
+            </button>
+            <button type="button" class="btn btn-outline-primary px-3 py-2">
+              100% Authentic Products
+            </button>
+            <button type="button" class="btn btn-outline-primary px-3 py-2">
+              Exclusive Offers <br><small>Enjoy offers on your favourites</small>
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-footer bg-light flex-column align-items-start">
+          <h6>Contact Us</h6>
+          <p class="mb-1">Call: +91-1322866869</p>
+          <p class="mb-1">Address: New Bus Stand, Kovilpatti</p>
+          <p class="mb-0">Email: <a href="mailto:glowmart@gmail.com">glowmart@gmail.com</a></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
   <script>
     // Products with categories added
     const productNames = [
@@ -170,6 +218,11 @@
 
     // Initial render all products
     renderProducts();
+
+    // Placeholder addToCart function — replace with your real one
+    function addToCart(id) {
+      alert(`Added product ID ${id} to cart`);
+    }
   </script>
 </body>
 </html>
