@@ -1,2 +1,51 @@
 body { font-family: Inter, Arial, sans-serif; }
 .card img { object-fit: cover; height: 160px; }
+/* Sidebar: wider */
+.sidebar {
+  width: 350px;  /* Increase from 280px */
+  flex-shrink: 0; /* Prevent shrinking */
+  background-color: #f8c8d2; /* Same light pink */
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: #6a3f7c;
+  user-select: none;
+  overflow: hidden;
+  position: sticky;
+  top: 54px;
+  height: calc(100vh - 54px);
+  box-sizing: border-box;
+}
+
+/* Make sidebar buttons full width */
+.category-btn {
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background-color: #f1a7b7;
+  color: #6a3f7c;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;
+  text-decoration: none;
+  display: block;
+}
+
+/* Navbar: keep height and padding, maybe slightly taller */
+header.navbar-topbar {
+  background-color: #f8c8d2;
+  padding: 1rem 1.5rem;  /* a bit more padding vertically */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1050;
+  color: #6a3f7c;
+}

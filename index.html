@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -8,50 +8,133 @@
   <style>
     body {
       background: #f8f9fa;
+      scroll-behavior: smooth;
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     }
-    /* Sidebar full background and full height */
-    .sidebar {
-      height: 100vh;               /* Full viewport height */
+
+    /* Top navbar */
+    header.navbar-topbar {
+      background-color: #f8c8d2; /* Light pink */
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
       position: sticky;
       top: 0;
-      background-color: #6f42c1;  /* Rich purple for full sidebar */
-      padding: 2rem 1rem;
+      z-index: 1050;
+      color: #6a3f7c;
+    }
+    header.navbar-topbar .brand {
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: #6a3f7c;
+      user-select: none;
+    }
+    header.navbar-topbar .btn-group {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+    }
+    header.navbar-topbar a.btn, header.navbar-topbar button.btn {
+      font-weight: 600;
+      color: #6a3f7c;
+      background-color: white;
+      border: 1px solid #6a3f7c;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      border-radius: 0.375rem;
+      padding: 0.4rem 1rem;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    header.navbar-topbar a.btn:hover, header.navbar-topbar button.btn:hover {
+      background-color: #6a3f7c;
+      color: white;
+      text-decoration: none;
+    }
+
+    /* Layout container */
+    .container-fluid {
+      display: flex;
+      height: calc(100vh - 54px);
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 320px;
+      flex-shrink: 0;
+      background-color: #f8c8d2;
+      padding: 2rem 1.5rem;
       display: flex;
       flex-direction: column;
-      align-items: stretch;
-      border-right: none;
+      gap: 1rem;
+      color: #6a3f7c;
+      user-select: none;
+      overflow: hidden;
+      position: sticky;
+      top: 54px;
+      height: calc(100vh - 54px);
+      box-sizing: border-box;
     }
-    /* Category buttons inside sidebar */
+
+    /* Sidebar buttons */
     .category-btn {
-      margin-bottom: 15px;
+      width: 100%;
       padding: 12px 0;
       border-radius: 0.5rem;
       font-weight: 600;
       cursor: pointer;
       border: none;
-      transition: background-color 0.3s ease;
-      color: #6f42c1;            /* Text color matches sidebar bg */
-      background-color: #d6bcfa; /* Light lavender background */
+      background-color: #f1a7b7;
+      color: #6a3f7c;
       box-shadow: 0 2px 5px rgba(0,0,0,0.15);
       text-align: center;
+      transition: background-color 0.3s ease, color 0.3s ease;
       user-select: none;
+      text-decoration: none;
+      display: block;
     }
     .category-btn:hover {
-      background-color: #c3a3f7;
-      color: #4b2c91;
+      background-color: #f0909e;
+      color: #6a3f7c;
     }
-    /* Active button style */
     .category-btn.active {
-      background-color: #4b2c91;
-      color: #f8f9fa;
+      background-color: #6a3f7c;
+      color: white;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
-    /* Adjust container spacing so main content is spaced nicely */
+
+    /* Main content */
     main {
-      padding-top: 2rem;
-      padding-left: 2rem;
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 2rem 2rem 3rem 2rem;
+      background: #f8f9fa;
+      box-sizing: border-box;
     }
-    /* Cards shadow for better look */
+
+    /* Hide product list when About Us active */
+    body.about-us-active #product-list {
+      display: none !important;
+    }
+
+    /* Show About Us only when active */
+    #about-us {
+      display: none;
+      background: #f1d1da;
+      padding: 3rem 2rem;
+      margin-top: 3rem;
+      border-radius: 1rem;
+      box-shadow: 0 6px 15px rgba(0, 123, 255, 0.2);
+      color: #6a3f7c;
+    }
+    body.about-us-active #about-us {
+      display: block !important;
+    }
+
+    /* Product cards */
     .card {
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       border: none;
@@ -62,120 +145,198 @@
       transform: translateY(-6px);
       box-shadow: 0 6px 16px rgba(0,0,0,0.15);
     }
+
+    /* About Us Section styles */
+    #about-us h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+    #about-us p.intro {
+      max-width: 700px;
+      margin: 0 auto 2rem auto;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    #about-us .offer-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    #about-us .offer-buttons button {
+      flex: 1 1 220px;
+      padding: 1rem 1.2rem;
+      font-weight: 600;
+      border-radius: 0.6rem;
+      border: 2px solid #6a3f7c;
+      background: white;
+      color: #6a3f7c;
+      box-shadow: 0 4px 10px rgba(74,144,226,0.2);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    #about-us .offer-buttons button:hover {
+      background-color: #6a3f7c;
+      color: white;
+      box-shadow: 0 6px 15px rgba(74,144,226,0.6);
+    }
+    #about-us .contact-info {
+      background: #f8c8d2;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 1.8rem 2rem;
+      border-radius: 0.8rem;
+      box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+      color: #6a3f7c;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    #about-us .contact-info a {
+      color: #6a3f7c;
+      text-decoration: underline;
+    }
+    #about-us .contact-info a:hover {
+      color: #103a8f;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="#">GlowMart</a>
-      <div>
-        <a href="checkout.html" class="btn btn-primary me-2">Checkout</a>
-        <a href="view_orders.php" class="btn btn-outline-secondary">View Orders</a>
-      </div>
+  <!-- Redirect if user not logged in -->
+  <script>
+    if (!localStorage.getItem('glowmart_logged_in_user')) {
+      window.location.href = 'auth.html';
+    }
+  </script>
+
+  <!-- Top navbar -->
+  <header class="navbar-topbar">
+    <div class="brand">GlowMart</div>
+    <div class="btn-group">
+      <a href="checkout.html" class="btn">Checkout</a>
+      <a href="view_orders.php" class="btn">View Orders</a>
+      <button id="signOutBtn" class="btn">Sign Out</button>
     </div>
-  </nav>
+  </header>
 
   <div class="container-fluid">
-    <div class="row">
-      <!-- Sidebar -->
-      <div class="col-12 col-md-3 col-lg-2 sidebar">
-        <button class="category-btn active" data-cat="all">All Products</button>
-        <button class="category-btn" data-cat="Face">Face</button>
-        <button class="category-btn" data-cat="Hair">Hair</button>
-        <button class="category-btn" data-cat="Body">Body</button>
-        <button class="category-btn" data-cat="Perfume">Perfume</button>
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+      <!-- Category buttons inserted dynamically -->
+    </nav>
 
-        <!-- About Us Button at bottom -->
-        <button class="category-btn mt-auto" style="background-color:#d6bcfa; color:#6f42c1;" data-bs-toggle="modal" data-bs-target="#aboutUsModal">
-          About Us
-        </button>
-      </div>
+    <!-- Main content -->
+    <main>
+      <h1 class="mb-4 text-center">GlowMart - Beauty Products</h1>
+      <div class="row d-flex flex-wrap" id="product-list"></div>
 
-      <!-- Products -->
-      <main class="col-12 col-md-9 col-lg-10">
-        <h1 class="mb-4 text-center">GlowMart — Featured Products</h1>
-        <div class="row" id="product-list"></div>
-      </main>
-    </div>
+      <!-- About Us Section -->
+      <section id="about-us" tabindex="-1">
+        <h2>About GlowMart</h2>
+        <p class="intro">
+          GlowMart is a digital consumer-centric retail platform offering a wide range of classic and emerging branded beauty and wellness products for skin care, body care, hair care, and fragrance for both men and women. We also feature lifestyle brands, including makeup.
+        </p>
+
+        <div class="offer-buttons">
+          <button type="button">FREE SHIPPING <br /><small>For Orders Above INR 500</small></button>
+          <button type="button">GENUINE PRODUCTS</button>
+          <button type="button">100% Authentic Products</button>
+          <button type="button">Exclusive Offers <br /><small>Enjoy offers on your favourites</small></button>
+        </div>
+
+        <div class="contact-info">
+          <h5>Contact Us</h5>
+          <p>Call: +91-1322866869</p>
+          <p>Address: New Bus Stand, Kovilpatti</p>
+          <p>Email: <a href="mailto:glowmart@gmail.com">glowmart@gmail.com</a></p>
+        </div>
+      </section>
+    </main>
   </div>
-
-  <footer class="text-center py-4 mt-4 bg-white shadow-sm">
-    <small>© GlowMart — Beauty & Skincare</small>
-  </footer>
-
-  <!-- About Us Modal -->
-  <div class="modal fade" id="aboutUsModal" tabindex="-1" aria-labelledby="aboutUsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
-      <div class="modal-content">
-
-        <div class="modal-header">
-          <h5 class="modal-title" id="aboutUsModalLabel">About GlowMart</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body">
-          <p>
-            GlowMart is a digital consumer-centric retail platform offering a wide range of classic and emerging branded beauty and wellness products for skin care, body care, hair care, and fragrance for both men and women. We also feature lifestyle brands, including makeup.
-          </p>
-
-          <div class="d-flex flex-wrap gap-2 my-4 justify-content-center">
-            <button type="button" class="btn btn-outline-primary px-3 py-2">
-              FREE SHIPPING <br><small>For Orders Above INR 500</small>
-            </button>
-            <button type="button" class="btn btn-outline-primary px-3 py-2">
-              GENUINE PRODUCTS
-            </button>
-            <button type="button" class="btn btn-outline-primary px-3 py-2">
-              100% Authentic Products
-            </button>
-            <button type="button" class="btn btn-outline-primary px-3 py-2">
-              Exclusive Offers <br><small>Enjoy offers on your favourites</small>
-            </button>
-          </div>
-        </div>
-
-        <div class="modal-footer bg-light flex-column align-items-start">
-          <h6>Contact Us</h6>
-          <p class="mb-1">Call: +91-1322866869</p>
-          <p class="mb-1">Address: New Bus Stand, Kovilpatti</p>
-          <p class="mb-0">Email: <a href="mailto:glowmart@gmail.com">glowmart@gmail.com</a></p>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // Products with categories added
+    // Sign Out button event
+    document.getElementById('signOutBtn').addEventListener('click', () => {
+      localStorage.removeItem('glowmart_logged_in_user');
+      localStorage.removeItem('glowmart_cart'); // optional: clear cart on logout
+      window.location.href = 'auth.html';
+    });
+
+    // Data setup
+    const categories = ["All Products", "Face", "Hair", "Body", "Perfume"];
+    const sidebar = document.getElementById("sidebar");
+    const productList = document.getElementById("product-list");
+    const aboutUsSection = document.getElementById("about-us");
+
+    // Sample product names (can be expanded/changed)
     const productNames = [
       "Hydrating Face Serum", "Vitamin C Cleanser", "Glow Face Moisturizer",
       "Overnight Repair Mask", "Aloe Vera Gel", "Charcoal Face Wash",
       "Rose Water Toner", "Green Tea Night Cream", "SPF 50 Sunscreen",
       "Lip Hydration Balm"
     ];
+    const productCategories = ["Face", "Hair", "Body", "Perfume"];
 
-    const categories = ["Face", "Hair", "Body", "Perfume"];
-
+    // Generate 50 products with id, name, price, img, category
     const PRODUCTS = Array.from({ length: 50 }, (_, i) => ({
       id: i + 1,
       name: productNames[i % productNames.length],
       price: (Math.random() * 20 + 5).toFixed(2),
-      img: `image/product${i + 1}.jpg`,
-      category: categories[i % categories.length]
+      img: `image/product${i + 1}.jpg`, // make sure you have these images in /image/
+      category: productCategories[i % productCategories.length]
     }));
 
-    window.PRODUCTS = PRODUCTS; // for script.js to access
+    // Cart stored in localStorage as 'glowmart_cart'
+    let cart = JSON.parse(localStorage.getItem('glowmart_cart')) || [];
 
-    const productList = document.getElementById("product-list");
-    const categoryButtons = document.querySelectorAll(".category-btn");
+    let selectedCategory = "All Products";
 
+    // Render sidebar categories
+    function renderSidebar() {
+      sidebar.innerHTML = "";
+
+      categories.forEach(cat => {
+        const btn = document.createElement("button");
+        btn.textContent = cat;
+        btn.className = "category-btn" + (cat === selectedCategory ? " active" : "");
+        btn.addEventListener("click", () => {
+          selectedCategory = cat;
+          showProductsCategory(cat);
+          renderSidebar();
+        });
+        sidebar.appendChild(btn);
+      });
+
+      // About Us button
+      const aboutUsBtn = document.createElement("button");
+      aboutUsBtn.textContent = "About Us";
+      aboutUsBtn.className = "category-btn";
+      aboutUsBtn.style.marginTop = "auto";
+      aboutUsBtn.addEventListener("click", () => {
+        showAboutUs();
+        renderSidebar();
+      });
+      sidebar.appendChild(aboutUsBtn);
+    }
+
+    // Show products by category
+    function showProductsCategory(category) {
+      document.body.classList.remove("about-us-active");
+      renderProducts(category === "All Products" ? "all" : category);
+    }
+
+    // Show About Us section
+    function showAboutUs() {
+      document.body.classList.add("about-us-active");
+    }
+
+    // Render product cards filtered by category
     function renderProducts(filterCat = "all") {
       productList.innerHTML = "";
-      const filtered = filterCat === "all" 
-        ? PRODUCTS 
-        : PRODUCTS.filter(p => p.category === filterCat);
+      const filtered = filterCat === "all" ? PRODUCTS : PRODUCTS.filter(p => p.category === filterCat);
 
       if(filtered.length === 0) {
         productList.innerHTML = `<p class="text-center">No products found in this category.</p>`;
@@ -184,13 +345,13 @@
 
       filtered.forEach(p => {
         const col = document.createElement("div");
-        col.className = "col-sm-6 col-md-4 col-lg-3 mb-4";
+        col.className = "col-sm-6 col-md-4 col-lg-3 mb-4 d-flex";
         col.innerHTML = `
-          <div class="card h-100 shadow-sm">
+          <div class="card h-100 shadow-sm" style="width: 100%;">
             <img src="${p.img}" class="card-img-top" alt="${p.name}" style="object-fit:cover; height:200px;">
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">${p.name}</h5>
-              <p class="card-text mb-2">Price: $${p.price}</p>
+              <p class="card-text mb-2">Price: ₹${p.price}</p>
               <div class="mt-auto">
                 <div class="d-flex gap-2">
                   <input type="number" min="1" value="1" id="qty-${p.id}" class="form-control form-control-sm" style="width:80px" />
@@ -204,25 +365,40 @@
       });
     }
 
-    // Handle category button clicks
-    categoryButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        // Remove active from all buttons
-        categoryButtons.forEach(b => b.classList.remove("active"));
-        // Set active to clicked
-        btn.classList.add("active");
-        // Render products filtered by clicked category
-        renderProducts(btn.getAttribute("data-cat"));
-      });
-    });
-
-    // Initial render all products
-    renderProducts();
-
-    // Placeholder addToCart function — replace with your real one
-    function addToCart(id) {
-      alert(`Added product ID ${id} to cart`);
+    // Add to cart function
+    function addToCart(productId) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) {
+        alert("Product not found");
+        return;
+      }
+      const qtyInput = document.getElementById(`qty-${productId}`);
+      const qty = parseInt(qtyInput?.value) || 1;
+      if(qty < 1) {
+        alert("Quantity must be at least 1");
+        return;
+      }
+      const existingIndex = cart.findIndex(item => item.id === productId);
+      if (existingIndex !== -1) {
+        cart[existingIndex].quantity += qty;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: parseFloat(product.price),
+          img: product.img,
+          quantity: qty
+        });
+      }
+      localStorage.setItem('glowmart_cart', JSON.stringify(cart));
+      alert(`${product.name} (x${qty}) added to cart.`);
     }
+
+    // Initialize
+    renderSidebar();
+    showProductsCategory(selectedCategory);
   </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
